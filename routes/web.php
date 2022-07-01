@@ -7,6 +7,7 @@ use App\Http\Controllers\HistoriaClinciaController;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\LaboratorioController;
 use App\Http\Controllers\OrdenMedicaController;
+use App\Http\Controllers\paciente1Controller;
 use App\Http\Controllers\recetarioMController;
 use App\Http\Controllers\ServrxController;
 use App\User;
@@ -36,6 +37,8 @@ Route::group(['prefix' => 'historiaClinica'], function () {
     Route::post('concluirAte', [HistoriaClinciaController::class, 'concluirAte']);
     Route::get('datoClinico_1', [HistoriaClinciaController::class, 'datoClinico_1']);
     Route::get('pdf_hcl_1/{paciente}', [HistoriaClinciaController::class, 'pdf_hcl_1']);
+    // ?-- busqueda a detalle 
+    Route::get('busq1',[paciente1Controller::class,'busq1']);
 });
 Route::group(['prefix' => 'cotizacion'], function () {
     Route::post('create', 'CotizacionController@create');

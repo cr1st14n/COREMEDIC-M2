@@ -169,7 +169,7 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"><i class="fa fa-th-large"></i></a>
 						<ul class="dropdown-menu arrow animated fadeInDown fast">
-							<li><a href="#"> Cotizaciones Realizadas</a></li>
+							<li><a href="#" id="btn_buscDetalle"> Busqueda a detalle</a></li>
 						</ul>
 						<!-- //dropdown-menu-->
 					</li>
@@ -1498,15 +1498,7 @@
 
 		<!-- Fin Modal para vistas de laboratorio -->
 		<nav id="menu">
-			<ul>
-				<li><span><i class="icon  fa fa-laptop"></i> Registor de atención</span>
-					<ul>
-						<li><a href="dashboard.html"><i class="icon  fa fa-rocket"></i> Pre-Cotizaciones registradas </a></li>
-						<li><a href="dashboard2.html"><i class="icon  fa fa-th"></i> </a></li>
-					</ul>
-				</li>
-				<li><a href="front/index.html"><i class="icon  fa fa-rocket"></i> Front End </a></li>
-			</ul>
+
 		</nav>
 
 		<!-- modal para confirmacion de eliminar -->
@@ -1727,6 +1719,44 @@
 			<!-- //modal-body-->
 		</div>
 
+		<!-- MODAL BUSQUEDAS A DETALLE -->
+		<div id="md_buscDetalle" class="modal fade md-stickTop" tabindex="-1" data-width="850">
+			<div class="modal-header bg-inverse bd-inverse-darken">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+				<h4 class="modal-title">Busqueda a detalle</h4>
+			</div>
+			<!-- //modal-header-->
+			<div class="modal-body">
+				<form class="navbar-form navbar-left">
+					<div class="form-group">
+						<label>Buscar: </label>
+						<select class="form-control" id="bus_det_A">
+							<option value="1"> Diagnostico </option>
+						</select>
+						<input type="text" size="50" class="form-control" name='bus_det_B' placeholder="Descripción" id="bus_det_B" autocomplete="off" />
+					</div>
+				</form>
+				<div class="table-responsive">
+					<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>CI</th>
+								<th>Paciente</th>
+								<th>Diagnostico</th>
+								<th>Motivo</th>
+								<th>fecha</th>
+								<th width="5%"></th>
+							</tr>
+						</thead>
+						<tbody align="center" id="bus_det_tableBody">
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- //modal-body-->
+		</div>
+		<!-- END  MODAL BUSQUEDAS A DETALLE -->
 
 		<!-- Jquery Library -->
 		<script type="text/javascript" src="{{ asset('Plantilla/assets/js/jquery.min.js')}}"></script>

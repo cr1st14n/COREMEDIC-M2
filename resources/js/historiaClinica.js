@@ -8,10 +8,10 @@ function colaPacienteMedAten() {
             console.log(response);
             var html2 = response.res
                 .map(function (e) {
-                    if (response.TipUsu!='SisMed_enf') {
-                        botton1=`<button class="btn btn-theme-inverse btn-xs" onclick="concluirCita(${e.id})" >`;
-                    }else{
-                        botton1=``;
+                    if (response.TipUsu != "SisMed_enf") {
+                        botton1 = `<button class="btn btn-theme-inverse btn-xs" onclick="concluirCita(${e.id})" >`;
+                    } else {
+                        botton1 = ``;
                     }
                     return (a = `
                         <div class="widget-mini-chart align-xs-left" id="fichaOrden_${e.id}">
@@ -72,7 +72,7 @@ function btnConcluirCitaMedica(param) {
 // *-------------------------------------
 
 function showHistoriaClinica(paciente, idAtencion) {
-    console.log(idAtencion);
+    console.log(paciente,idAtencion);
     idPacienteSelect = paciente;
     idAtencionSelect = idAtencion;
     $("#form_new_cotizacion").trigger("reset");
@@ -87,6 +87,9 @@ function showHistoriaClinica(paciente, idAtencion) {
             $("#sector_ani_carga").html(html_ani_carga);
             $("#sector_ani_carga_2").html("");
             showSigVi();
+            if ( idAtencion=="rev" ) {
+                $('#bus_det_tableBody').modal('hide');
+            }
         },
     });
 }
@@ -226,6 +229,73 @@ function showhistoriaCompl_1() {
                     $("#loadingAni").hide();
                     console.log("asdf");
                 }, 500);
+            }
+        },
+    });
+}
+
+// * ------ funciones para busqueda a detalle
+
+$("#btn_buscDetalle").click(function (e) {
+    e.preventDefault();
+    $("#bus_det_B").val('');
+    $("#bus_det_tableBody").html("");
+    $("#md_buscDetalle").modal("show");
+});
+$("#bus_det_B").keyup(function (e) {
+    A = $("#bus_det_A").val();
+    B = $("#bus_det_B").val();
+    if (B != "") {
+        console.log(A, B);
+        $.ajax({
+            type: "get",
+            url: "historiaClinica/busq1",
+            data: { A: A, B: B },
+            // dataType: "dataType",
+            success: function (response) {
+                console.log(response);
+                htmlB = response
+                    .map(function (e) {
+                        return (a = `
+                        <tr>
+                            <td>${e.pa_ci}</td>
+                            <td valign="middle">${e.pa_nombre} ${e.pa_appaterno} ${e.pa_apmaterno}</td>
+                            <td>${e.cc_motivo}</td>
+                            <td>${e.cc_diagnostico}</td>
+                            <td>${e.fecha}</td>
+                            <td>
+                                <span class="tooltip-area">
+                                    <a href="javascript:void(0)" class="btn btn-default btn-sm" onclick='showHistoriaClinica2(${e.pa_id},"rev")' title="Edit"><i class="fa fa-pencil" ></i></a>
+                                </span>
+                            </td>
+                        </tr>
+                        `);
+                    })
+                    .join(" ");
+
+                $("#bus_det_tableBody").html(htmlB);
+            },
+        });
+    }
+});
+function showHistoriaClinica2(paciente, idAtencion) {
+    console.log(paciente,idAtencion);
+    idPacienteSelect = paciente;
+    idAtencionSelect = idAtencion;
+    $("#form_new_cotizacion").trigger("reset");
+    $.ajax({
+        type: "GET",
+        url: "historiaClinica/hcl",
+        data: { id: idPacienteSelect },
+        dataType: "text",
+        success: function (dat) {
+            $("#panel1").html(dat);
+            $("#md-listPacientesEspera").modal("hide");
+            $("#sector_ani_carga").html(html_ani_carga);
+            $("#sector_ani_carga_2").html("");
+            // showSigVi();
+            if ( idAtencionSelect=="rev" ) {
+                $('#md_buscDetalle').modal('hide');
             }
         },
     });
